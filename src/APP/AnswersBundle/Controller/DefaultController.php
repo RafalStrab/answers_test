@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 /**
  * Admin Podcast controller.
@@ -16,6 +17,11 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 class DefaultController extends Controller
 {
     /**
+     * @ApiDoc(
+     *  description="Application index page.",
+     *  tags={"Main page"},
+     * )
+     * 
      * @Route("/", name="index")
      * @Template()
      */
@@ -27,6 +33,21 @@ class DefaultController extends Controller
     }
 
     /**
+     * @ApiDoc(
+     *  description="Attachment download.",
+     *  tags={"file"},
+     *  requirements={
+     *      {
+     *          "name"="id",
+     *          "dataType"="integer",
+     *          "description"="attachment id"
+     *      }
+     *  },
+     *  parameters={
+     *      {"name"="id", "dataType"="integer", "required"=true, "description"="attachment id"}
+     *  }
+     * )
+     * 
      * @Route("/attachment/{id}", name="index_attachment_download")
      * @Method("GET")
      */

@@ -22,7 +22,8 @@
         "gedmo/doctrine-extensions": "2.3.*@dev",
         "stof/doctrine-extensions-bundle": "v1.1.0",
         "cocur/slugify": "^1.4",
-        "jms/serializer-bundle": "^1.1"
+        "jms/serializer-bundle": "^1.1",
+        "nelmio/api-doc-bundle": "^2.10"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"

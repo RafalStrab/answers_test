@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Cocur\Slugify\Slugify;
 use APP\AnswersBundle\Entity\Answer;
 use APP\AnswersBundle\Entity\Comment;
@@ -24,6 +25,11 @@ use APP\AnswersBundle\Entity\MostSearchedAnswer;
 class APIController extends Controller
 {
     /**
+     * @ApiDoc(
+     *  description="Create new answer.",
+     *  tags={"JSON"}
+     * )
+     * 
      * @Route("/create-answer", name="api_create_answer", options={"expose"=true})
      * @Method("POST")
      */
@@ -77,6 +83,11 @@ class APIController extends Controller
     }
 
     /**
+     * @ApiDoc(
+     *  description="Create new answer.",
+     *  tags={"JSON"}
+     * )
+     * 
      * @Route("/create-comment", name="api_create_comment", options={"expose"=true})
      * @Method("POST")
      */
@@ -90,6 +101,10 @@ class APIController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $answer = $em->getRepository('APPAnswersBundle:Answer')->find($answerId);
+
+        if (!$answer) {
+            throw $this->createNotFoundException('Sorry not existing service.');
+        }
 
         try {
             $comment = new Comment();
@@ -204,6 +219,19 @@ class APIController extends Controller
     }
 
     /**
+     * @ApiDoc(
+     *  description="Get answer.",
+     *  tags={"JSON"},
+     *  requirements={
+     *      {
+     *          "name"="answerSlug",
+     *          "dataType"="string"
+     *      }
+     *  },
+     *  parameters={
+     *      {"name"="answerSlug", "dataType"="string", "required"=true}
+     *  }
+     * )
      * @Route("/get-answer/{answerSlug}", name="api_get_answer", options={"expose"=true})
      * @Method({"GET"})
      */
@@ -212,6 +240,11 @@ class APIController extends Controller
         $em = $this->getDoctrine()->getManager();
         
         $answer = $em->getRepository('APPAnswersBundle:Answer')->findBySlug($answerSlug);
+
+        if (!$answer) {
+            throw $this->createNotFoundException('Sorry not existing service.');
+        }
+
         $comments = $em->getRepository('APPAnswersBundle:Comment')->findByAnswer($answer[0]);
         $answerAttachments = $em->getRepository('APPAnswersBundle:Attachment')->findByAnswer($answer[0]);
 
@@ -252,14 +285,32 @@ class APIController extends Controller
     }
 
      /**
-     * @Route("/get-comments/{answer}", name="api_get_comments", options={"expose"=true})
+     * @ApiDoc(
+     *  description="Get comments.",
+     *  tags={"JSON"},
+     *  requirements={
+     *      {
+     *          "name"="answer",
+     *          "dataType"="string"
+     *      }
+     *  },
+     *  parameters={
+     *      {"name"="answerSlug", "dataType"="string", "required"=true}
+     *  }
+     * )
+     * @Route("/get-comments/{answerSlug}", name="api_get_comments", options={"expose"=true})
      * @Method({"GET"})
      */
-    public function getCommentsAction($answer)
+    public function getCommentsAction($answerSlug)
     {
         $em = $this->getDoctrine()->getManager();
 
         $answer = $em->getRepository('APPAnswersBundle:Answer')->findBySlug($answerSlug);
+
+        if (!$answer) {
+            throw $this->createNotFoundException('Sorry not existing service.');
+        }
+
         $comments = $em->getRepository('APPAnswersBundle:Comment')->findByAnswer($answer[0]);
 
         return new JsonResponse(
@@ -268,6 +319,10 @@ class APIController extends Controller
     }
 
     /**
+     * @ApiDoc(
+     *  description="Get all answers.",
+     *  tags={"JSON"}
+     * )
      * @Route("/get-all", name="api_get_all", options={"expose"=true})
      * @Method({"GET"})
      */
@@ -290,12 +345,17 @@ class APIController extends Controller
             array_push($arrAnswers, $arrAnswer);
         }
         $a['data'] = $arrAnswers;
+
         return new JsonResponse(
             $a
         );
     }
 
     /**
+     * @ApiDoc(
+     *  description="Get newest answers (max 10).",
+     *  tags={"JSON"}
+     * )
      * @Route("/get-newest-answers", name="api_get_newest_answers", options={"expose"=true})
      * @Method({"GET"})
      */
@@ -317,6 +377,10 @@ class APIController extends Controller
     }
 
     /**
+     * @ApiDoc(
+     *  description="Get most searched answers (max 10).",
+     *  tags={"JSON"}
+     * )
      * @Route("/get-most-searched-answers", name="api_get_most_searched_answers", options={"expose"=true})
      * @Method({"GET"})
      */
@@ -340,6 +404,20 @@ class APIController extends Controller
     }
 
     /**
+     * @ApiDoc(
+     *  description="Search for an answers.",
+     *  tags={"JSON"},
+     *  requirements={
+     *      {
+     *          "name"="query",
+     *          "dataType"="string",
+     *          "description"="searched string"
+     *      }
+     *  },
+     *  parameters={
+     *      {"name"="query", "dataType"="string", "required"=true, "description"="searched string"}
+     *  }
+     * )
      * @Route("/search", name="api_search_answer", options={"expose"=true})
      * @Method({"GET", "POST"})
      */
@@ -369,6 +447,10 @@ class APIController extends Controller
     }
 
     /**
+     * @ApiDoc(
+     *  description="Part 2. Cars table. Returns cars grouped by years range.",
+     *  tags={"JSON"}
+     * )
      * @Route("/get-cars", name="api_get_cars")
      * @Method({"GET", "POST"})
      */
