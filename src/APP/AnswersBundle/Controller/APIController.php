@@ -368,6 +368,53 @@ class APIController extends Controller
         );
     }
 
+    /**
+     * @Route("/get-cars", name="api_get_cars")
+     * @Method({"GET", "POST"})
+     */
+    public function getCarsAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $conn = $em->getConnection();
+
+        $sql = "SELECT DISTINCT t2.fabrication_year,
+                    SUM(t2.BMW) as BMW,
+                    SUM(t2.Mercedes) as Mercedes,
+                    SUM(t2.Audi) as Audi,
+                    SUM(t2.Fiat) as Fiat
+                FROM
+                    (SELECT
+                        CASE WHEN t1.fabrication_year BETWEEN 0 AND 1998 THEN '0-1998'
+                        WHEN t1.fabrication_year BETWEEN 1999 AND 2002 THEN '1999-2002'
+                        WHEN t1.fabrication_year BETWEEN 2003 AND 2006 THEN '2003-2006'
+                        WHEN t1.fabrication_year BETWEEN 2007 AND 2009 THEN '2007-2009'
+                        ELSE '2010-2016' END AS fabrication_year,
+                        SUM(t1.BMW) as BMW,
+                        SUM(t1.Mercedes) as Mercedes,
+                        SUM(t1.Audi) as Audi,
+                        SUM(t1.Fiat) as Fiat
+                    FROM
+                        (SELECT 
+                        DISTINCT fabrication_year,
+                        COUNT(CASE WHEN producer='Fiat' THEN producer END) AS Fiat,
+                        COUNT(CASE WHEN producer='BMW' THEN producer END) AS BMW,
+                        COUNT(CASE WHEN producer='Mercedes' THEN producer END) AS Mercedes,
+                        COUNT(CASE WHEN producer='Audi' THEN producer END) AS Audi
+                        FROM cars
+                        GROUP BY fabrication_year) t1
+                    GROUP BY t1.fabrication_year) t2
+                GROUP BY fabrication_year;";
+
+        $statement = $conn->prepare($sql);
+        $statement->execute();
+        $cars = $statement->fetchAll();        
+        
+        return new JsonResponse(
+            $cars
+        );
+    }
+
     private function getSlug($value)
     {
         $slugify = new Slugify();
