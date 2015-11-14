@@ -8,8 +8,17 @@ use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * Answer
  *
- * @ORM\Table(name="answers")
  * @ORM\Entity(repositoryClass="APP\AnswersBundle\Entity\AnswerRepository")
+ * @ORM\Table(name="answers",
+ *      indexes={
+ *          @ORM\Index(name="search_idx", columns={
+ *              "title",
+ *              "slug",
+ *              "created_by",
+ *              "created_at"
+ *          })
+ *      }
+ * )
  */
 class Answer
 {
