@@ -1,0 +1,32 @@
+{% extends "::base.html.twig" %}
+
+{% block body %}
+	<body>
+		<div class="container">
+			{% include 'APPAnswersBundle:Default:search-box.html.twig' %}
+			<div class="row">
+				<table id="dataTable" class="table table-hover table-bordered" cellspacing="0" width="100%">
+			        <thead>
+			            <tr>
+			                <th>Title</th>
+			                <th>Created by</th>
+			                <th>Created at</th>
+			                <th># comments</th>
+			            </tr>
+			        </thead>
+			        <tbody>
+			            {% for answer in answers %}
+			            	<tr>
+			            		<td><a href="{{ answer.uri }}">{{ answer.title }}</a></td>
+			            		<td>{{ answer.createdBy }}</td>
+			            		<td>{{ answer.createdAt|date('F d, Y H:i:s') }}</td>
+			            		<td>0</td>
+			            	</tr>
+			            {% endfor %}
+			        </tbody>
+			    </table>
+			</div>
+		</div>
+		{% include 'APPAnswersBundle:Default:modals.html.twig' %}
+	</body>
+{% endblock %}

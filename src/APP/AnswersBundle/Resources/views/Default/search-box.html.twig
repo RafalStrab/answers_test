@@ -1,0 +1,18 @@
+<div class="row">
+	<div class="col=md-12">
+		<input id="search-box" class="form-control" type="text" placeholder="Ask a question" />
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-2 go-home">
+		<ul class="list-inline">
+			<li><a href="">Home</a></li>
+		</ul>
+	</div>
+	<div class="col-md-4 col-md-offset-6 search-nav">
+		<ul class="list-inline">
+			<li><a id="show-all" href="{{ path('api_get_all') }}">Show all</a></li>
+			<li><a href="#" data-toggle="modal" data-target="#modalCreateNewAnswer">Create new answer</a></li>
+		</ul>
+	</div>
+</div>

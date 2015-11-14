@@ -1,0 +1,78 @@
+<div class="modal fade" id="modalCreateNewAnswer" tabindex="-1" role="dialog" aria-labelledby="modalCreateNewAnswerLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="modalCreateNewAnswerLabel">Create new answer</h4>
+			</div>
+			<div class="modal-body">
+				<form id="answerForm" class="dropzone" action="{{ path('api_create_answer') }}" method="post" enctype="multipart/form-data">
+					<div class="form-group">
+						<label for="answerTitle">Title:</label>
+						<input type="text" class="form-control" required="required" id="answerTitle" name="answerTitle" placeholder="Title">
+					</div>
+					<div class="form-group">
+						<label for="answerDescription">Description:</label>
+						<textarea class="form-control" required="required" id="answerDescription" name="answerDescription" placeholder="Conent"></textarea>
+					</div>
+					<div class="form-group">
+						<label for="answerAuthor">Author:</label>
+						<input type="text" class="form-control" required="required" id="answerAuthor" name="answerAuthor" placeholder="Author">
+					</div>
+					<input type="file" id="answerAttachment" name="file">
+					<button type="submit" class="hidden"></button>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="answerSave" class="btn btn-success">Save</button>
+				<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="modalCreateNewComment" tabindex="-1" role="dialog" aria-labelledby="modalCreateNewCommentLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="modalCreateNewCommentLabel">Create new comment</h4>
+			</div>
+			<div class="modal-body">
+				<form id="commentForm" class="dropzone" action="{{ path('api_create_comment') }}" method="post" enctype="multipart/form-data">
+					<div class="form-group">
+						<label for="commentText">Content:</label>
+						<textarea class="form-control" required="required" id="commentText" name="commentText" placeholder="Conent"></textarea>
+					</div>
+					<div class="form-group">
+						<label for="commentAuthor">Author:</label>
+						<input type="text" class="form-control" required="required" id="commentAuthor" name="commentAuthor" placeholder="Author">
+					</div>
+					<input type="file" id="commentAttachment" name="file">
+					<button type="submit" class="hidden"></button>
+					<input type="hidden" value="" id="answerId" name="answerId">
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="commentSave" class="btn btn-success">Save</button>
+				<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="modalAfterSaveAnswer" tabindex="-1" role="dialog" aria-labelledby="modalAfterSaveAnswerLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="modalAfterSaveAnswerLabel">What do you want to do next?</h4>
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="btn-create-new-answer" class="btn btn-success">Create new</button>
+				<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+				<a href="#" id="answer-search-title-link" class="btn btn-info btn-show-saved-answer">Show saved answer</a>
+			</div>
+		</div>
+	</div>
+</div>

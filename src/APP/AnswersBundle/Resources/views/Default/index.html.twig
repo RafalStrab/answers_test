@@ -1,0 +1,67 @@
+{% extends "::base.html.twig" %}
+
+{% block body %}
+	<body>
+		<div class="container">
+			{% include 'APPAnswersBundle:Default:search-box.html.twig' %}
+
+			<div id="content-container">
+				<div class="row">
+					<div class="col-md-6 hidden" id="div-newest-answers"></div>
+					<div class="col-md-6 hidden" id="div-most-searched"></div>
+					<div class="col-md-12 hidden" id="div-show-answer">
+						<div class="row">
+							<div class="col-md-12">
+								<h4 id="answer-title"></h4>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-6 div-created-by">
+								<h5 id="answer-created-by"></h5>
+							</div>
+							<div class="col-md-6 div-created-at">
+								<h5 id="answer-created-at"></h5>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12">
+								<p id="answer-description"></p>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12" id="answerAttachments"></div>
+						</div>
+						<div class="row">
+							<div class="col-md-12">
+								<hr>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-6">
+								<h4>Comments:</h4>
+							</div>
+							<div class="col-md-6 div-add-comment">
+								<a href="#" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modalCreateNewComment">Add comment</a>
+							</div>
+							<div id="comments-div" class="col-md-12"></div>
+						</div>
+					</div>
+					<div class="col-md-12 hidden" id="div-show-all">
+						<table id="answersTable" class="table table-striped table-bordered table-hover table-responsive" cellspacing="0">
+		                     <thead>
+		                        <tr>
+		                            <th>Title</th>
+		                            <th>Created by</th>
+		                            <th>Created at</th>
+		                            <th>Comments</th>
+		                        </tr>
+		                    </thead>
+		                </table>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		{% include 'APPAnswersBundle:Default:modals.html.twig' %}
+	</body>
+{% endblock %}
