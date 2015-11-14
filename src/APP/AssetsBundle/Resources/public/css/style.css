@@ -46,6 +46,9 @@
 	font-size: 2em;
 	padding-top: 10px;
 }
+#div-newest-answers, #div-most-searched {
+    padding: 0;
+}
 .dropzone .dz-message {
     border: 1px solid #b2b2b2;
     border-radius: 4px;

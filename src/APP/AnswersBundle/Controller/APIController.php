@@ -14,6 +14,7 @@ use Cocur\Slugify\Slugify;
 use APP\AnswersBundle\Entity\Answer;
 use APP\AnswersBundle\Entity\Comment;
 use APP\AnswersBundle\Entity\Attachment;
+use APP\AnswersBundle\Entity\MostSearchedAnswer;
 
 /**
  * API Controller
@@ -184,6 +185,24 @@ class APIController extends Controller
         return $arrAttachments;
     }
 
+    private function addToMostSearched($answer)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        try {
+            $mostSearchedAnswer = new MostSearchedAnswer();
+            $mostSearchedAnswer
+                ->setAnswer($answer)
+            ;
+            $em->persist($mostSearchedAnswer);
+            $em->flush();
+
+            return true;
+        } catch (Exception $e) {
+            return false;
+        }   
+    }
+
     /**
      * @Route("/get-answer/{answerSlug}", name="api_get_answer", options={"expose"=true})
      * @Method({"GET"})
@@ -195,6 +214,8 @@ class APIController extends Controller
         $answer = $em->getRepository('APPAnswersBundle:Answer')->findBySlug($answerSlug);
         $comments = $em->getRepository('APPAnswersBundle:Comment')->findByAnswer($answer[0]);
         $answerAttachments = $em->getRepository('APPAnswersBundle:Attachment')->findByAnswer($answer[0]);
+
+        $this->addToMostSearched($answer[0]);
 
         $arrAnswer['id'] = $answer[0]->getId();
         $arrAnswer['title'] = $answer[0]->getTitle();
@@ -240,9 +261,6 @@ class APIController extends Controller
 
         $answer = $em->getRepository('APPAnswersBundle:Answer')->findBySlug($answerSlug);
         $comments = $em->getRepository('APPAnswersBundle:Comment')->findByAnswer($answer[0]);
-
-        // $serializer = $this->container->get('serializer');
-        // $answer = $serializer->serialize($answer[0], 'json');
 
         return new JsonResponse(
             $answer
@@ -293,6 +311,29 @@ class APIController extends Controller
         $statement->execute();
         $answers = $statement->fetchAll();
 
+        return new JsonResponse(
+            $answers
+        );
+    }
+
+    /**
+     * @Route("/get-most-searched-answers", name="api_get_most_searched_answers", options={"expose"=true})
+     * @Method({"GET"})
+     */
+    public function getMostSearchedAnswersAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $conn = $em->getConnection();
+        $statement = $conn->prepare("SELECT answers.title, answers.description, answers.uri
+                                    FROM most_searched_answers
+                                    JOIN answers ON most_searched_answers.answer=answers.id
+                                    GROUP BY answer
+                                    ORDER BY COUNT(most_searched_answers.answer) DESC
+                                    LIMIT 10;");
+        $statement->execute();
+        $answers = $statement->fetchAll();
+        
         return new JsonResponse(
             $answers
         );

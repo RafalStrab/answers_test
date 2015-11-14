@@ -87,4 +87,230 @@ class Attachment
      * @Gedmo\Timestampable(on="create")
      */
     private $createdAt;
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set originalFilename
+     *
+     * @param string $originalFilename
+     *
+     * @return Attachment
+     */
+    public function setOriginalFilename($originalFilename)
+    {
+        $this->original_filename = $originalFilename;
+
+        return $this;
+    }
+
+    /**
+     * Get originalFilename
+     *
+     * @return string
+     */
+    public function getOriginalFilename()
+    {
+        return $this->original_filename;
+    }
+
+    /**
+     * Set systemFilename
+     *
+     * @param string $systemFilename
+     *
+     * @return Attachment
+     */
+    public function setSystemFilename($systemFilename)
+    {
+        $this->system_filename = $systemFilename;
+
+        return $this;
+    }
+
+    /**
+     * Get systemFilename
+     *
+     * @return string
+     */
+    public function getSystemFilename()
+    {
+        return $this->system_filename;
+    }
+
+    /**
+     * Set systemPath
+     *
+     * @param string $systemPath
+     *
+     * @return Attachment
+     */
+    public function setSystemPath($systemPath)
+    {
+        $this->system_path = $systemPath;
+
+        return $this;
+    }
+
+    /**
+     * Get systemPath
+     *
+     * @return string
+     */
+    public function getSystemPath()
+    {
+        return $this->system_path;
+    }
+
+    /**
+     * Set mimeType
+     *
+     * @param string $mimeType
+     *
+     * @return Attachment
+     */
+    public function setMimeType($mimeType)
+    {
+        $this->mime_type = $mimeType;
+
+        return $this;
+    }
+
+    /**
+     * Get mimeType
+     *
+     * @return string
+     */
+    public function getMimeType()
+    {
+        return $this->mime_type;
+    }
+
+    /**
+     * Set extension
+     *
+     * @param string $extension
+     *
+     * @return Attachment
+     */
+    public function setExtension($extension)
+    {
+        $this->extension = $extension;
+
+        return $this;
+    }
+
+    /**
+     * Get extension
+     *
+     * @return string
+     */
+    public function getExtension()
+    {
+        return $this->extension;
+    }
+
+    /**
+     * Set size
+     *
+     * @param integer $size
+     *
+     * @return Attachment
+     */
+    public function setSize($size)
+    {
+        $this->size = $size;
+
+        return $this;
+    }
+
+    /**
+     * Get size
+     *
+     * @return integer
+     */
+    public function getSize()
+    {
+        return $this->size;
+    }
+
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     *
+     * @return Attachment
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * Set answer
+     *
+     * @param \APP\AnswersBundle\Entity\Answer $answer
+     *
+     * @return Attachment
+     */
+    public function setAnswer(\APP\AnswersBundle\Entity\Answer $answer = null)
+    {
+        $this->answer = $answer;
+
+        return $this;
+    }
+
+    /**
+     * Get answer
+     *
+     * @return \APP\AnswersBundle\Entity\Answer
+     */
+    public function getAnswer()
+    {
+        return $this->answer;
+    }
+
+    /**
+     * Set comment
+     *
+     * @param \APP\AnswersBundle\Entity\Comment $comment
+     *
+     * @return Attachment
+     */
+    public function setComment(\APP\AnswersBundle\Entity\Comment $comment = null)
+    {
+        $this->comment = $comment;
+
+        return $this;
+    }
+
+    /**
+     * Get comment
+     *
+     * @return \APP\AnswersBundle\Entity\Comment
+     */
+    public function getComment()
+    {
+        return $this->comment;
+    }
 }

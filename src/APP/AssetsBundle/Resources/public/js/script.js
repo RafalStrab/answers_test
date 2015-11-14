@@ -5,6 +5,8 @@ $(document).ready(function() {
 
     var answerForm            = $('#answerForm');
     var commentForm           = $('#commentForm');
+    var newestAnswersContainer = $('#newest-answers-container');
+    var mostSearchedSontainer = $('#most-searched-container');
     var newestAnswersDiv      = $('#div-newest-answers');
     var mostSearchedDiv       = $('#div-most-searched');
     var divShowAnswer         = $('#div-show-answer');
@@ -102,7 +104,6 @@ $(document).ready(function() {
     }
 
     function buildCommentBox(comment) {
-        console.log(comment);
         var attachments = '';
         if (comment.files) {
             $.each(comment.files, function(index, file) {
@@ -186,18 +187,19 @@ $(document).ready(function() {
         });
     }
 
-    // function getMostSearchedAnswers() {
-    //     $.ajax({
-    //         url : Routing.generate('api_get_most_searched_answers'),
-    //         type : 'GET',
-    //         contentType: 'json',
-    //         success : function(data) {
-    //             $.each(data, function(index, val) {
-    //                 mostSearchedDiv.append(buildAnswerBox(val));
-    //             });
-    //         }
-    //     });
-    // }
+    function getMostSearchedAnswers() {
+        $.ajax({
+            // url : Routing.generate('api_get_most_searched_answers'),
+            url : 'http://answers.local/app_dev.php/api/get-most-searched-answers',
+            type : 'GET',
+            contentType: 'json',
+            success : function(data) {
+                $.each(data, function(index, val) {
+                    mostSearchedDiv.append(buildAnswerBox(val));
+                });
+            }
+        });
+    }
 
     function buildAnswerBox(answerData) {
         return '<div class="row"><div class="col-md-12"><a id="answer-search-title-link" href="' + answerData.uri + '">' + answerData.title + '</a></div><div class="col-md-12">' + answerData.description.slice(0, 100) + '</div></div>'
@@ -207,15 +209,15 @@ $(document).ready(function() {
         div.empty();
     }
 
-    function hideDivs(newestAnswersDivOff, mostSearchedDivOff, divShowAnswerOff, divShowAllOff) {
-        if (newestAnswersDivOff) {
-            newestAnswersDiv.addClass('hidden');
+    function hideDivs(newestAnswersContainerOff, mostSearchedSontainerOff, divShowAnswerOff, divShowAllOff) {
+        if (newestAnswersContainerOff) {
+            newestAnswersContainer.addClass('hidden');
         } else {
-            newestAnswersDiv.removeClass('hidden');
+            newestAnswersContainer.removeClass('hidden');
         }
 
-        if (mostSearchedDivOff) {
-            mostSearchedDiv.addClass('hidden');
+        if (mostSearchedSontainerOff) {
+            mostSearchedSontainer.addClass('hidden');
         } else {
             mostSearchedDiv.removeClass('hidden');
         }
@@ -244,7 +246,11 @@ $(document).ready(function() {
     function init() {
         if (newestAnswersDiv) {
             getNewestAnswers();
-        };    
+        };
+
+        if (mostSearchedDiv) {
+            getMostSearchedAnswers();
+        };  
 
         hideDivs(false, false, true, true);
     }
