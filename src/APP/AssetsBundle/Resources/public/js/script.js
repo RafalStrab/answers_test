@@ -189,8 +189,7 @@ $(document).ready(function() {
 
     function getMostSearchedAnswers() {
         $.ajax({
-            // url : Routing.generate('api_get_most_searched_answers'),
-            url : 'http://answers.local/app_dev.php/api/get-most-searched-answers',
+            url : Routing.generate('api_get_most_searched_answers'),
             type : 'GET',
             contentType: 'json',
             success : function(data) {

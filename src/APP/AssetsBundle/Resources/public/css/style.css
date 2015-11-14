@@ -42,6 +42,9 @@
     position: absolute;
     visibility: hidden;
 }
+#comment-created-by {
+    text-align: right;
+}
 .attachment-icon {
 	font-size: 2em;
 	padding-top: 10px;

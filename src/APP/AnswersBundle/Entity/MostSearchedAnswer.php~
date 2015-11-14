@@ -26,7 +26,7 @@ class MostSearchedAnswer
      * @var integer
      *
      * @ORM\ManyToOne(targetEntity="Answer")
-     * @ORM\JoinColumn(name="answer", referencedColumnName="id")
+     * @ORM\JoinColumn(name="answer", referencedColumnName="id", onDelete="CASCADE",)
      */
     private $answer;
 
