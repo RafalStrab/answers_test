@@ -16,6 +16,7 @@ $(document).ready(function() {
     var commentsDiv           = $('#comments-div');
     var answerFilesDiv        = $('#answerAttachments');
     var divShowAll            = $('#div-show-all');
+    var modalLoader           = $('#modalLoader');
 
     var answers = new Bloodhound({
         datumTokenizer: Bloodhound.tokenizers.obj.whitespace('title'),
@@ -70,6 +71,7 @@ $(document).ready(function() {
 
     $(document).on('click', '#answer-search-title-link', function(event) {
         event.preventDefault();
+        modalLoader.modal('show');
         var url = $(this).attr('href');
         page = 'show-answer';
         clearDiv(commentsDiv);
@@ -95,6 +97,7 @@ $(document).ready(function() {
                     answerFilesDiv.append(buildAttachmentBox(file));
                 });
                 hideDivs(true, true, false, true);
+                modalLoader.modal('hide');
             }
         });
     });

@@ -76,3 +76,18 @@
 		</div>
 	</div>
 </div>
+
+<div class="modal fade" id="modalLoader" tabindex="-1" role="dialog" aria-labelledby="modalLoaderLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-body">
+				<p>Loading...</p>
+				<p>
+					{% image '@APPAssetsBundle/Resources/public/images/loader.gif' %}
+					    <img src="{{ asset_url }}" alt="Loader" />
+					{% endimage %}
+				</p>
+			</div>
+		</div>
+	</div>
+</div>

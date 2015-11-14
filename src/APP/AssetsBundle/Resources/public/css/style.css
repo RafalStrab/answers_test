@@ -45,6 +45,12 @@
 #comment-created-by {
     text-align: right;
 }
+#modalLoader .modal-body {
+    text-align: center;
+}
+#modalLoader .modal-dialog {
+    margin-top: 50px;
+}
 .attachment-icon {
 	font-size: 2em;
 	padding-top: 10px;
